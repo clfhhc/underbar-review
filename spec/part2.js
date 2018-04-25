@@ -60,7 +60,7 @@
         // the behavior described by the `it` string
         var array = [1, 2, 3];
         var value = 5;
-        expect(_.contains(array, value)).to.be.false
+        expect(_.contains(array, value)).to.be.false;
         // throw new Error('This test is missing.');
       });
 
@@ -94,7 +94,7 @@
       it('fails for a collection of all-falsy values', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        expect(_.every([false, "", 0], _.identity)).to.be.false;
+        expect(_.every([false, '', 0], _.identity)).to.be.false;
       });
 
       it('fails for a collection containing mixed falsy and truthy values', function() {
@@ -192,7 +192,7 @@
       it('should override properties found on the destination', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        var destination = {a : 'c'};
+        var destination = {a: 'c'};
         var source = { a: 'b' };
         var extended = _.extend(destination, source);
 
@@ -275,8 +275,8 @@
       it('should copy any property whose key is not already set on the target', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        var destination = {a:2};
-        var source = { a: 1 ,b:3};
+        var destination = {a: 2};
+        var source = { a: 1, b: 3};
 
         _.defaults(destination, source);
 

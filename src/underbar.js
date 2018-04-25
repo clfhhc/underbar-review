@@ -7,8 +7,8 @@
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
-   return val;
- };
+    return val;
+  };
 
   /**
    * COLLECTIONS
@@ -39,16 +39,16 @@
   // last element.
   _.last = function(array, n) {
     // 
-    if(n === undefined){
-     return array[array.length-1];
-   }
+    if (n === undefined) {
+      return array[array.length - 1];
+    }
    
-   if(n<=array.length){
-    return array.slice(array.length-n, array.length);
-  } else {
-    return array;
-  }
-};
+    if (n <= array.length) {
+      return array.slice(array.length - n, array.length);
+    } else {
+      return array;
+    }
+  };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
@@ -61,23 +61,23 @@
 
     //to check whether the collection is object or array
     // if it is an array
-      //iterate over the elements of the array
-      //call the iterator(value, i, array)
+    //iterate over the elements of the array
+    //call the iterator(value, i, array)
     // if it is an object
-      //iterate over the keys of the object
-      //call the iterator(value, key, object)
+    //iterate over the keys of the object
+    //call the iterator(value, key, object)
 
-      if(Array.isArray(collection)){
-        for(var i = 0; i < collection.length; i++){
-          iterator(collection[i], i, collection);
-        }
-      } else {
-        for(var key in collection){
-          iterator(collection[key], key, collection);
-        }
+    if (Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++) {
+        iterator(collection[i], i, collection);
       }
+    } else {
+      for (var key in collection) {
+        iterator(collection[key], key, collection);
+      }
+    }
 
-    };
+  };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
@@ -101,18 +101,18 @@
     //i: array for collection, callback for test
     //o: array of elements that pass the test
 
-    var result=[];
+    var result = [];
     //iterate over elements of the array
-      //call test on each element
+    //call test on each element
 
-      _.each(collection,function (value,index) {
-        if(test(value,index)) {
-          result.push(value);
-        }
-      });
+    _.each(collection, function (value, index) {
+      if (test(value, index)) {
+        result.push(value);
+      }
+    });
 
-      return result;
-    };
+    return result;
+  };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
@@ -123,9 +123,9 @@
     //o : an array of elements that fail the test
     
     //function that reverse the truthiness of the test
-    var reverseTest =function(value, index){
-     return !test(value,index);
-   }
+    var reverseTest = function(value, index) {
+      return !test(value, index);
+    };
     // call _.filter(collection, reverseTest)
     return _.filter(collection, reverseTest);
     
@@ -139,21 +139,21 @@
     //i: array for array, boolean for isSorted, callback for iterator
     //o: array that contains unique values of the array after calling an iterator on the array
     
-    var uniqueValues=[];
+    var uniqueValues = [];
     //check if iterator exists
     //iterate over elements of the array
-      //call iterator on each element
-      //add the transformed element into the array if it is not in the result
-      var result=[];
+    //call iterator on each element
+    //add the transformed element into the array if it is not in the result
+    var result = [];
 
-      iterator = iterator || _.identity;    
+    iterator = iterator || _.identity;    
 
-      _.each(array,function (value,index){
-        if (!result.includes(iterator(value,index))) {
-          result.push(iterator(value,index));
-          uniqueValues.push(value);
-        }
-      });
+    _.each(array, function (value, index) {
+      if (!result.includes(iterator(value, index))) {
+        result.push(iterator(value, index));
+        uniqueValues.push(value);
+      }
+    });
     // if (iterator === undefined) {
     //   for (var i =0; i<array.length; i++) {
     //     if (uniqueValues.indexOf(array[i])<0) {
@@ -186,15 +186,15 @@
     // o : a new array with each element from input array after iterator callback
 
     //iterate over each element of the array
-     // run the call back on each element
+    // run the call back on each element
     // store those elements in a new array
     // return new array
     var mapped = [];
-    _.each(collection, function(value, index){
+    _.each(collection, function(value, index) {
      
       mapped.push(iterator(value, index));
       
-    })
+    });
     return mapped;
   };
 
@@ -241,22 +241,22 @@
     //o : same type as accumulator;
     
     //iterate over each element of collection
-     //run callback on each elements 
+    //run callback on each elements 
     //update the accumulator everytime the iterator is run on the element
-    _.each(collection, function(value, index){
+    _.each(collection, function(value, index) {
       
-      if(index === 0){
-       if(accumulator === undefined){
-         accumulator = collection[0];
+      if (index === 0) {
+        if (accumulator === undefined) {
+          accumulator = collection[0];
          
-       } else {
+        } else {
+          accumulator = iterator(accumulator, value);
+        }
+      } else {
         accumulator = iterator(accumulator, value);
       }
-    } else {
-      accumulator = iterator(accumulator, value);
-    }
     
-  });
+    });
     return accumulator;
   };
 
@@ -280,11 +280,11 @@
     //o: boolean if all the element pass the test
     iterator = iterator || _.identity;  
     var bool;
-    return _.reduce(collection,function (accu,value){
-      if (typeof iterator(value)==="boolean") {
-        bool=iterator(value);
+    return _.reduce(collection, function (accu, value) {
+      if (typeof iterator(value) === 'boolean') {
+        bool = iterator(value);
       } else {
-        bool=Boolean(iterator(value));
+        bool = Boolean(iterator(value));
       }
       return (accu && bool);
     }, true);
@@ -298,13 +298,13 @@
     //o : boolean
     
     //find a way to reverse the iterator boolean, call it var =reversed
-     //use every to output the reverse of reveresed
-      if(iterator === undefined){
-        iterator = _.identity;
-      }
-      return !_.every(collection, function (value, index){  
-        return !(iterator(value, index))
-      });
+    //use every to output the reverse of reveresed
+    if (iterator === undefined) {
+      iterator = _.identity;
+    }
+    return !_.every(collection, function (value, index) {  
+      return !(iterator(value, index));
+    });
   };
 
 
@@ -331,8 +331,8 @@
     //being the objects to be added to the input obj
     //o : the extended object
     
-    for(var i = 1; i < arguments.length; i++){
-      for(var key in arguments[i]){
+    for (var i = 1; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
         obj[key] = arguments[i][key];
       }
     }
@@ -346,8 +346,8 @@
     //being the objects to be added to the input obj
     //o : the extended object
     
-    for(var i = 1; i < arguments.length; i++){
-      for(var key in arguments[i]){
+    for (var i = 1; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
         if (!(key in obj)) {
           obj[key] = arguments[i][key];
         }
@@ -406,15 +406,15 @@
     
     //convert arguments into strings
     //storage[arguments] = fn(arguments);
-      //if the arguments are same, just grab storage.arguments
+    //if the arguments are same, just grab storage.arguments
     return function() {
-      if ( !( JSON.stringify(arguments) in storage) ){
+      if ( !( JSON.stringify(arguments) in storage) ) {
         // TIP: .apply(this, arguments) is the standard way to pass on all of the
         // infromation from one function call to another.
         result = func.apply(this, arguments);
         storage[JSON.stringify(arguments)] = result;
       } else {
-        result =  storage[JSON.stringify(arguments)];
+        result = storage[JSON.stringify(arguments)];
       }
       // The new function always returns the originally computed result.
       return result;
@@ -432,14 +432,14 @@
     
     //i : callback for the func, number for wait, additional arguments will be argument s for func
     //o : a delayed function
-    var arg = Array.prototype.slice.call(arguments,2,arguments.length)
+    var arg = Array.prototype.slice.call(arguments, 2, arguments.length);
     // var cb = function(){
-    console.log(Array.prototype.slice.call(arguments,2,arguments.length))
+    console.log(Array.prototype.slice.call(arguments, 2, arguments.length));
     //   func(arg);
     // }
-    return setTimeout(function(){
+    return setTimeout(function() {
       //console.log(Array.prototype.slice.call(arguments,2,arguments.length))
-      console.log(arg)
+      console.log(arg);
       func(...arg);
     }, wait);
   };
@@ -465,17 +465,17 @@
     var newArr = array.slice();
     
     //iterate from last element to second element
-    for(var i = newArr.length-1 ; i >=1 ; i--){
-     //for each generate a random index
-     var randomIndex = Math.floor(Math.random()*i);
-     var temp = newArr[i];
-    //create an intermediate var = temp
-    //replace the last element with the random index element 
-     newArr[i] = newArr[randomIndex];
-     newArr[randomIndex] = temp;
+    for (var i = newArr.length - 1; i >= 1; i--) {
+      //for each generate a random index
+      var randomIndex = Math.floor(Math.random() * i);
+      var temp = newArr[i];
+      //create an intermediate var = temp
+      //replace the last element with the random index element 
+      newArr[i] = newArr[randomIndex];
+      newArr[randomIndex] = temp;
     }
-     // store the last element to be swapped in temp
-     //replace the random index element with temp
+    // store the last element to be swapped in temp
+    //replace the random index element with temp
     //in the next iteration move the pointer to one element to the le\\\
     return newArr;
     
