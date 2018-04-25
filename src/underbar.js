@@ -276,12 +276,35 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    //i: array for collection, callback for iterator
+    //o: boolean if all the element pass the test
+    iterator = iterator || _.identity;  
+    var bool;
+    return _.reduce(collection,function (accu,value){
+      if (typeof iterator(value)==="boolean") {
+        bool=iterator(value);
+      } else {
+        bool=Boolean(iterator(value));
+      }
+      return (accu && bool);
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    //i : array for the collection and callback for iterator
+    //o : boolean
+    
+    //find a way to reverse the iterator boolean, call it var =reversed
+     //use every to output the reverse of reveresed
+      if(iterator === undefined){
+        iterator = _.identity;
+      }
+      return !_.every(collection, function (value, index){  
+        return !(iterator(value, index))
+      });
   };
 
 
@@ -304,11 +327,33 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    //i : first argument being the obj that is to be extended, remaining arguments 
+    //being the objects to be added to the input obj
+    //o : the extended object
+    
+    for(var i = 1; i < arguments.length; i++){
+      for(var key in arguments[i]){
+        obj[key] = arguments[i][key];
+      }
+    }
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    //i : first argument being the obj that is to be extended, remaining arguments 
+    //being the objects to be added to the input obj
+    //o : the extended object
+    
+    for(var i = 1; i < arguments.length; i++){
+      for(var key in arguments[i]){
+        if (!(key in obj)) {
+          obj[key] = arguments[i][key];
+        }
+      }
+    }
+    return obj;
   };
 
 
@@ -352,6 +397,29 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    
+    var storage = {};
+    var result;
+
+    // TIP: We'll return a new function that delegates to the old one, but only
+    // if it hasn't been called before.
+    
+    //convert arguments into strings
+    //storage[arguments] = fn(arguments);
+      //if the arguments are same, just grab storage.arguments
+    return function() {
+      if ( !( JSON.stringify(arguments) in storage) ){
+        // TIP: .apply(this, arguments) is the standard way to pass on all of the
+        // infromation from one function call to another.
+        result = func.apply(this, arguments);
+        storage[JSON.stringify(arguments)] = result;
+      } else {
+        result =  storage[JSON.stringify(arguments)];
+      }
+      // The new function always returns the originally computed result.
+      return result;
+    };
+    
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -361,6 +429,19 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    
+    //i : callback for the func, number for wait, additional arguments will be argument s for func
+    //o : a delayed function
+    var arg = Array.prototype.slice.call(arguments,2,arguments.length)
+    // var cb = function(){
+    console.log(Array.prototype.slice.call(arguments,2,arguments.length))
+    //   func(arg);
+    // }
+    return setTimeout(function(){
+      //console.log(Array.prototype.slice.call(arguments,2,arguments.length))
+      console.log(arg)
+      func(...arg);
+    }, wait);
   };
 
 
@@ -375,6 +456,29 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    //i : an array
+    //o : an array
+    
+    //creats a new array 
+    // elements from the input array but at random indices
+    
+    var newArr = array.slice();
+    
+    //iterate from last element to second element
+    for(var i = newArr.length-1 ; i >=1 ; i--){
+     //for each generate a random index
+     var randomIndex = Math.floor(Math.random()*i);
+     var temp = newArr[i];
+    //create an intermediate var = temp
+    //replace the last element with the random index element 
+     newArr[i] = newArr[randomIndex];
+     newArr[randomIndex] = temp;
+    }
+     // store the last element to be swapped in temp
+     //replace the random index element with temp
+    //in the next iteration move the pointer to one element to the le\\\
+    return newArr;
+    
   };
 
 
